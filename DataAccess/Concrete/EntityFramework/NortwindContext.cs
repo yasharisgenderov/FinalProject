@@ -11,11 +11,12 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb ; Database=Northwind : Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb ; Database=Northwind ; Trusted_Connection=true");
         }
         public DbSet<Product> products { get; set; }
         public DbSet<Category> categories { get; set; }
         public DbSet<Customer> customers { get; set; }
+        public DbSet<Order> orders { get; set; }
     }
 }
 
