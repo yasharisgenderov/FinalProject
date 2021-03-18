@@ -21,11 +21,16 @@ namespace Business.Concrete
         public IResult Add(Product product) // utilities folderini void ucun istifadecini melumatlandirmaq ucun yaradiriq yeni resultlari bildirmek ucun.Daha sonra utilitylerin icinde IResult taratdim ve voidle deyisdim
         {
             // business codes
-            _productDal.Add(product);
             /*Result result = new Result();
-            result.Success;  eger men bunu setle verseydim bele olardi lakin getle verirem deye bele olur. YENI KI SUCCESSI ORDA SET ELYIB YENI DEYER VERSEYDIK TEKCE RETurn SUCCESS YAZARDIQ AMMA BIZ GETLE VERMISIK DEYE NEW RESULTIN MOTERIZESINDE DEYERLERI BIZ VERIRIK
+           result.Success;  eger men bunu setle verseydim bele olardi lakin getle verirem deye bele olur. YENI KI SUCCESSI ORDA SET ELYIB YENI DEYER VERSEYDIK TEKCE RETurn SUCCESS YAZARDIQ AMMA BIZ GETLE VERMISIK DEYE NEW RESULTIN MOTERIZESINDE DEYERLERI BIZ VERIRIK
             return result;*/
-            return new Result(true,"Urun eklendi");
+            
+            if (product.ProductName.Length<2)
+            {
+                return new ErrorResult("Urun ismi en az 2 karakter olmalidi");
+            }
+            _productDal.Add(product);
+            return new SuccessResult("Urun Eklendi");
         }
 
         public List<Product> GetAll()
