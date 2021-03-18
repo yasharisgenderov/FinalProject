@@ -7,17 +7,19 @@ using System.Text;
 
 namespace Business.Abstract
 {
+    //neticeni,mesaji hem de dondereceyi datani yeni List<Product>i saxliyit .voidler IResultdan istifade edirik,IDataResultda List<Productdan>
+    // IDataResult<List<Product>> yazanda bildirdiyimiz sey bizim yalniz List<Product>i deyil hemcinin emeliyyatin neticesinin ve messagei da retrun elemek istediyimizi bildiririk
     public interface IProductService
     {
-        List<Product> GetAllByCategoryId(int id);
+        IDataResult<List<Product>> GetAllByCategoryId(int id); 
 
-        List<Product> GetAll();
+        IDataResult<List<Product>> GetAll();
 
-        List<Product> GetByUnitPrice(decimal min, decimal max);
+        IDataResult<List<Product>> GetByUnitPrice(decimal min, decimal max);
 
-        List<ProductDetailDto> GetProductDetails();
+        IDataResult<List<ProductDetailDto>> GetProductDetails();
 
-        Product GetById(int productId);
+        IDataResult<Product> GetById(int productId);
 
         IResult Add(Product product);
     }
