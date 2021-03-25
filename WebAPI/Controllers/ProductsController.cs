@@ -24,7 +24,8 @@ namespace WebAPI.Controllers
 
         [HttpGet("getall")]
         public IActionResult GetAll()
-        {   
+        {
+            /*IProductService productService = new ProductManager(new EfProductDal()); bu buarada asiliq yaradir deye constructor halina saldim */
             var result = _productService.GetAll();
             if (result.Success)
             {
