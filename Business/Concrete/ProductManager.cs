@@ -1,9 +1,12 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,15 +24,11 @@ namespace Business.Concrete
 
         public IResult Add(Product product) // utilities folderini void ucun istifadecini melumatlandirmaq ucun yaradiriq yeni resultlari bildirmek ucun.Daha sonra utilitylerin icinde IResult taratdim ve voidle deyisdim
         {
-            // business codes
-            /*Result result = new Result();
-           result.Success;  eger men bunu setle verseydim bele olardi lakin getle verirem deye bele olur. YENI KI SUCCESSI ORDA SET ELYIB YENI DEYER VERSEYDIK TEKCE RETurn SUCCESS YAZARDIQ AMMA BIZ GETLE VERMISIK DEYE NEW RESULTIN MOTERIZESINDE DEYERLERI BIZ VERIRIK
-            return result;*/
-            
-            if (product.ProductName.Length<2)
-            {
-                return new ErrorResult(Messages.ProductNameInvalid);
-            }
+            ValidationTool.Validate(new ProductValidator(), product);
+            //loglama
+            //cachremove
+            //performance
+            //transaction
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
