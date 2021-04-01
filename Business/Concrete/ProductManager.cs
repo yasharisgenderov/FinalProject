@@ -4,6 +4,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,24 +20,26 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
-        public ProductManager(IProductDal productDal)
+        ICategoryService _categoryService;
+        public ProductManager(IProductDal productDal, ICategoryService categoryService)
         {
             _productDal = productDal;
+            _categoryService = categoryService;
         }
 
         [ValidationAspect(typeof(ProductValidator))] // add metodunu dogrula(Validation) ProductValidatordan istifade ederek
         public IResult Add(Product product) // utilities folderini void ucun istifadecini melumatlandirmaq ucun yaradiriq yeni resultlari bildirmek ucun.Daha sonra utilitylerin icinde IResult taratdim ve voidle deyisdim
         {
             /*ValidationTool.Validate(new ProductValidator(), product); bu kod ValidationAspectden evvel,onun yerine yazilmis bir koddur */
-            if (CheckIfProductCountOfCategoryCorrect(product.CategoryId).Success)
+           IResult result =  BusinessRules.Run(CheckIfProductNameExists(product.ProductName),CheckIfProductCountOfCategoryCorrect(product.CategoryId),CheckIfCategoryLimitExceded());
+
+            if (result!=null)
             {
-                if (CheckIfProductNameExists(product.ProductName).Success)
-                {
-                    _productDal.Add(product);
-                    return new SuccessResult(Messages.ProductAdded);
-                }
+                return result;
             }
-            return new ErrorResult();
+
+            _productDal.Add(product);
+            return new SuccessResult(Messages.ProductAdded);
         }
 
         public IDataResult<List<Product>> GetAll()
@@ -95,6 +98,16 @@ namespace Business.Concrete
             if (result)
             {
                 return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfCategoryLimitExceded()
+        {
+            var result = _categoryService.GetAll();
+            if (result.Data.Count>15)
+            {
+                return new ErrorResult(Messages.CategoryLimitExceded);
             }
             return new SuccessResult();
         }
