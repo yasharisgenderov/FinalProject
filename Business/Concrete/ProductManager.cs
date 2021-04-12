@@ -26,7 +26,7 @@ namespace Business.Concrete
             _productDal = productDal;
             _categoryService = categoryService;
         }
-
+        //[SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))] // add metodunu dogrula(Validation) ProductValidatordan istifade ederek
         public IResult Add(Product product) // utilities folderini void ucun istifadecini melumatlandirmaq ucun yaradiriq yeni resultlari bildirmek ucun.Daha sonra utilitylerin icinde IResult taratdim ve voidle deyisdim
         {
