@@ -1,4 +1,5 @@
-﻿using Entities.Abstract;
+﻿using Core.Entities.Concrete;
+using Entities.Abstract;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class NortwindContext:DbContext
+    public class NorthwindContext:DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -17,6 +18,9 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Category> categories { get; set; }
         public DbSet<Customer> customers { get; set; }
         public DbSet<Order> orders { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
     }
 }
 

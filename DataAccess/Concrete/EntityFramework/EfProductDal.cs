@@ -11,11 +11,11 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfProductDal : EfEntityRepositoryBase<Product, NortwindContext>, IProductDal // iproductdali yazmagimizin sebebi IproductDlda her hansi emeliyyati yazanda burda implement elemek mumkun olsun
+    public class EfProductDal : EfEntityRepositoryBase<Product, NorthwindContext>, IProductDal // iproductdali yazmagimizin sebebi IproductDlda her hansi emeliyyati yazanda burda implement elemek mumkun olsun
     {
         public List<ProductDetailDto> GetProductDetails()
         {
-            using (NortwindContext context = new NortwindContext())
+            using (NorthwindContext context = new NorthwindContext())
             {
                 var result = from p in context.products
                              join c in context.categories   
