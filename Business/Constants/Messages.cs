@@ -24,5 +24,6 @@ namespace Business.Constants
         public static string PasswordError="Parol yanlisdir";
         public static string UserNotFound="Istifadeci tapilmadi";
         public static string UserRegistered="Register olundu";
+        internal static string ProductUpdated;
     }
 }
