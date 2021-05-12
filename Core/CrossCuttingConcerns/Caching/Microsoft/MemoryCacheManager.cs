@@ -32,9 +32,9 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
             return _memoryCache.Get(key);
         }
 
-        public bool IsAdded(string key)
+        public bool IsAdd(string key)
         {
-            return _memoryCache.TryGetValue(key,out _);
+            return _memoryCache.TryGetValue(key, out _);
         }
 
         public void Remove(string key)
