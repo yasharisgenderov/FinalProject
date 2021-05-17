@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         public IActionResult GetAll()
         {
             /*IProductService productService = new ProductManager(new EfProductDal()); bu buarada asiliq yaradir deye constructor halina saldim */
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             var result = _productService.GetAll();
             if (result.Success)
             {
